@@ -1,0 +1,94 @@
+[gd_scene load_steps=8 format=3 uid="uid://cdmong2s4s23i"]
+
+[ext_resource type="PackedScene" uid="uid://cemkrp85r1ak0" path="res://prefabs/props/prop_floor_10x10m.tscn" id="1_7dtao"]
+[ext_resource type="PackedScene" uid="uid://evbqfxxvo4bd" path="res://prefabs/props/prop_box_1m.tscn" id="2_rwr5k"]
+[ext_resource type="PackedScene" uid="uid://cn6cvhd6him37" path="res://prefabs/entities/player/player.tscn" id="3_kpfnq"]
+[ext_resource type="PackedScene" uid="uid://b05r0bijxqljg" path="res://prefabs/entities/camera_rig/camera_rig.tscn" id="4_hvxhd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rwr5k"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_kpfnq"]
+sky_material = SubResource("ProceduralSkyMaterial_rwr5k")
+
+[sub_resource type="Environment" id="Environment_hvxhd"]
+background_mode = 2
+sky = SubResource("Sky_kpfnq")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="TestLevel" type="Node3D"]
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="PropFloor10x10m" parent="Terrain" instance=ExtResource("1_7dtao")]
+
+[node name="PropFloor10x10m2" parent="Terrain" instance=ExtResource("1_7dtao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="PropFloor10x10m3" parent="Terrain" instance=ExtResource("1_7dtao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+
+[node name="PropFloor10x10m4" parent="Terrain" instance=ExtResource("1_7dtao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -10)
+
+[node name="PropFloor10x10m5" parent="Terrain" instance=ExtResource("1_7dtao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -10)
+
+[node name="PropFloor10x10m6" parent="Terrain" instance=ExtResource("1_7dtao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
+
+[node name="PropFloor10x10m7" parent="Terrain" instance=ExtResource("1_7dtao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 10)
+
+[node name="PropFloor10x10m8" parent="Terrain" instance=ExtResource("1_7dtao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+
+[node name="PropFloor10x10m9" parent="Terrain" instance=ExtResource("1_7dtao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="PropBox1m" parent="Props" instance=ExtResource("2_rwr5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+
+[node name="PropBox1m2" parent="Props" instance=ExtResource("2_rwr5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -1)
+
+[node name="PropBox1m3" parent="Props" instance=ExtResource("2_rwr5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 0)
+
+[node name="PropBox1m4" parent="Props" instance=ExtResource("2_rwr5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 1)
+
+[node name="PropBox1m5" parent="Props" instance=ExtResource("2_rwr5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 1)
+
+[node name="PropBox1m6" parent="Props" instance=ExtResource("2_rwr5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 1)
+
+[node name="PropBox1m7" parent="Props" instance=ExtResource("2_rwr5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 3)
+
+[node name="PropBox1m8" parent="Props" instance=ExtResource("2_rwr5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 3)
+
+[node name="PropBox1m9" parent="Props" instance=ExtResource("2_rwr5k")]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, -3, -0.373123, 0)
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_hvxhd")
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera_rig") instance=ExtResource("3_kpfnq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.052937, 0, 0.0935125)
+camera_rig = NodePath("CameraRig")
+
+[node name="CameraRig" parent="Player" instance=ExtResource("4_hvxhd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54543, 0)

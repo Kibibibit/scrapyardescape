@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cemkrp85r1ak0"]
+
+[ext_resource type="Material" uid="uid://dqsh00ujemuce" path="res://resources/materials/standard_3d/material_3d_placeholder_big.tres" id="1_ucd2w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tpk52"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ucd2w"]
+size = Vector2(10, 10)
+
+[node name="PropFloor10x10m" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_tpk52")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_ucd2w")
+mesh = SubResource("PlaneMesh_ucd2w")
+skeleton = NodePath("../StaticBody3D")

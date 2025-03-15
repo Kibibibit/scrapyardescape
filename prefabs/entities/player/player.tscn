@@ -1,0 +1,93 @@
+[gd_scene load_steps=12 format=3 uid="uid://cn6cvhd6him37"]
+
+[ext_resource type="Script" uid="uid://deqmr5acxko55" path="res://prefabs/entities/player/player.gd" id="1_crdqx"]
+[ext_resource type="Script" uid="uid://bjvd7p8r43ypi" path="res://scripts/state_machine/state_machine.gd" id="1_mcok7"]
+[ext_resource type="Script" uid="uid://lyppisvsvvw0" path="res://scripts/state_machine/player_states/state_player_idle.gd" id="2_crdqx"]
+[ext_resource type="Script" uid="uid://v3eg6cgscxfs" path="res://scripts/components/player_move_component.gd" id="4_2ka7j"]
+[ext_resource type="Script" uid="uid://wtl7a1amqjg0" path="res://scripts/state_machine/player_states/state_player_move.gd" id="5_ul3qg"]
+[ext_resource type="Script" uid="uid://drlk003gg5ios" path="res://scripts/state_machine/player_states/state_player_fall.gd" id="6_cemo1"]
+[ext_resource type="Script" uid="uid://44tt6h5133ur" path="res://scripts/state_machine/player_states/state_player_jump.gd" id="7_ksl0f"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i3q01"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_okp3x"]
+radius = 0.4
+height = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_i3q01"]
+size = Vector3(0.8, 0.8, 0.8)
+
+[sub_resource type="SphereMesh" id="SphereMesh_mcok7"]
+radius = 0.1
+height = 0.2
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("state_machine", "skin", "move_component")]
+script = ExtResource("1_crdqx")
+state_machine = NodePath("StateMachine")
+skin = NodePath("PlayerSkin")
+move_component = NodePath("PlayerMoveComponent")
+air_accel = 30.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_i3q01")
+
+[node name="PlayerSkin" type="Node3D" parent="."]
+
+[node name="BodyMesh" type="MeshInstance3D" parent="PlayerSkin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+mesh = SubResource("CapsuleMesh_okp3x")
+skeleton = NodePath("../..")
+
+[node name="Head" type="Node3D" parent="PlayerSkin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20341, 0)
+
+[node name="HeadMesh" type="MeshInstance3D" parent="PlayerSkin/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+mesh = SubResource("BoxMesh_i3q01")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="PlayerSkin/Head/HeadMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23, 0.235, -0.42)
+mesh = SubResource("SphereMesh_mcok7")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="PlayerSkin/Head/HeadMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23, 0.235, -0.42)
+mesh = SubResource("SphereMesh_mcok7")
+
+[node name="PlayerMoveComponent" type="Node" parent="."]
+script = ExtResource("4_2ka7j")
+metadata/_custom_type_script = "uid://v3eg6cgscxfs"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("1_mcok7")
+starting_state = NodePath("StatePlayerIdle")
+metadata/_custom_type_script = "uid://bjvd7p8r43ypi"
+
+[node name="StatePlayerIdle" type="Node" parent="StateMachine" node_paths=PackedStringArray("move_state", "jump_state", "fall_state")]
+script = ExtResource("2_crdqx")
+move_state = NodePath("../StatePlayerMove")
+jump_state = NodePath("../StatePlayerJump")
+fall_state = NodePath("../StatePlayerFall")
+animation_name = "IDLE"
+metadata/_custom_type_script = "uid://lyppisvsvvw0"
+
+[node name="StatePlayerMove" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state")]
+script = ExtResource("5_ul3qg")
+idle_state = NodePath("../StatePlayerIdle")
+jump_state = NodePath("../StatePlayerJump")
+fall_state = NodePath("../StatePlayerFall")
+metadata/_custom_type_script = "uid://wtl7a1amqjg0"
+
+[node name="StatePlayerFall" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "move_state", "jump_state")]
+script = ExtResource("6_cemo1")
+idle_state = NodePath("../StatePlayerIdle")
+move_state = NodePath("../StatePlayerMove")
+jump_state = NodePath("../StatePlayerJump")
+metadata/_custom_type_script = "uid://drlk003gg5ios"
+
+[node name="StatePlayerJump" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "fall_state", "move_state")]
+script = ExtResource("7_ksl0f")
+idle_state = NodePath("../StatePlayerIdle")
+fall_state = NodePath("../StatePlayerFall")
+move_state = NodePath("../StatePlayerMove")
+metadata/_custom_type_script = "uid://44tt6h5133ur"

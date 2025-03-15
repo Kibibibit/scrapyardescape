@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://evbqfxxvo4bd"]
+
+[ext_resource type="Material" uid="uid://d13pcwor8qwn5" path="res://resources/materials/standard_3d/material_3d_placeholder_small.tres" id="1_b828f"]
+[ext_resource type="ArrayMesh" uid="uid://bayinnrauwoq6" path="res://assets/models/box_1m.obj" id="2_uy84h"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vi7pp"]
+
+[node name="PropBox1m" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_vi7pp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_b828f")
+mesh = ExtResource("2_uy84h")
