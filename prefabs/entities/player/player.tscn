@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cn6cvhd6him37"]
+[gd_scene load_steps=13 format=3 uid="uid://cn6cvhd6him37"]
 
 [ext_resource type="Script" uid="uid://deqmr5acxko55" path="res://prefabs/entities/player/player.gd" id="1_crdqx"]
 [ext_resource type="Script" uid="uid://bjvd7p8r43ypi" path="res://scripts/state_machine/state_machine.gd" id="1_mcok7"]
+[ext_resource type="PackedScene" uid="uid://bcxvu1t2hcb7v" path="res://prefabs/weapons/gun_test.tscn" id="2_5pt8g"]
 [ext_resource type="Script" uid="uid://lyppisvsvvw0" path="res://scripts/state_machine/player_states/state_player_idle.gd" id="2_crdqx"]
 [ext_resource type="Script" uid="uid://v3eg6cgscxfs" path="res://scripts/components/player_move_component.gd" id="4_2ka7j"]
 [ext_resource type="Script" uid="uid://wtl7a1amqjg0" path="res://scripts/state_machine/player_states/state_player_move.gd" id="5_ul3qg"]
@@ -21,12 +22,17 @@ size = Vector3(0.8, 0.8, 0.8)
 radius = 0.1
 height = 0.2
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("state_machine", "skin", "move_component")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("weapon", "state_machine", "skin", "move_component")]
+collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_crdqx")
+weapon = NodePath("PlayerSkin/Hand/GunTest")
 state_machine = NodePath("StateMachine")
 skin = NodePath("PlayerSkin")
 move_component = NodePath("PlayerMoveComponent")
 air_accel = 30.0
+jump_impulse = 12.0
+gravity = 20.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -53,6 +59,11 @@ mesh = SubResource("SphereMesh_mcok7")
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="PlayerSkin/Head/HeadMesh"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23, 0.235, -0.42)
 mesh = SubResource("SphereMesh_mcok7")
+
+[node name="Hand" type="Marker3D" parent="PlayerSkin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3794, 0.952823, -0.235728)
+
+[node name="GunTest" parent="PlayerSkin/Hand" instance=ExtResource("2_5pt8g")]
 
 [node name="PlayerMoveComponent" type="Node" parent="."]
 script = ExtResource("4_2ka7j")

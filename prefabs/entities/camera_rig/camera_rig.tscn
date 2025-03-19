@@ -4,11 +4,12 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mx1mh"]
 
-[node name="CameraRig" type="Node3D" node_paths=PackedStringArray("arm_pivot", "spring_arm", "camera")]
+[node name="CameraRig" type="Node3D" node_paths=PackedStringArray("arm_pivot", "spring_arm", "camera", "aim_ray")]
 script = ExtResource("1_udhj1")
 arm_pivot = NodePath("ArmPivot")
 spring_arm = NodePath("ArmPivot/SpringArm3D")
 camera = NodePath("ArmPivot/SpringArm3D/Camera3D")
+aim_ray = NodePath("ArmPivot/SpringArm3D/Camera3D/RayCast3D")
 
 [node name="ArmPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.84715, 0.531354, 0, -0.531354, 0.84715, 0.970517, 0, 0)
@@ -18,3 +19,8 @@ shape = SubResource("SphereShape3D_mx1mh")
 spring_length = 6.0
 
 [node name="Camera3D" type="Camera3D" parent="ArmPivot/SpringArm3D"]
+
+[node name="RayCast3D" type="RayCast3D" parent="ArmPivot/SpringArm3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+target_position = Vector3(0, 0, -1000)
+collision_mask = 3

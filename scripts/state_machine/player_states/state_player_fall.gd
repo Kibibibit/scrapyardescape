@@ -26,7 +26,6 @@ func do_physics_process(delta: float) -> State:
 	if _parent.is_on_floor():
 		if not move_direction.is_zero_approx():
 			return move_state
-		## If the player can jump, go to jump state
 		if _move_component.wants_jump() && _parent.is_on_floor():
 			return jump_state
 		

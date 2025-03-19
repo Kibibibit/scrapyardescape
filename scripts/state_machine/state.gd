@@ -9,7 +9,7 @@ var _parent: StatefulCharacter3D
 var _move_component: MoveComponent
 var _animation_player: AnimationPlayer
 
-var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+
 
 
 func do_init(
@@ -37,7 +37,7 @@ func do_unhandled_input(_event: InputEvent) -> State:
 
 func do_process(delta: float) -> State:
 	if apply_gravity:
-		_parent.velocity.y -= gravity*delta
+		_parent.velocity.y -= _parent.gravity*delta
 	return null
 
 func do_physics_process(_delta: float) -> State:

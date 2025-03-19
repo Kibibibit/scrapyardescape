@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcxvu1t2hcb7v"]
+
+[ext_resource type="Script" uid="uid://cod3x6ghv84w5" path="res://prefabs/weapons/weapon_prefab.gd" id="1_exji8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_bw8ve"]
+size = Vector3(0.1, 0.1, 0.5)
+
+[node name="GunTest" type="Node3D" node_paths=PackedStringArray("barrel_exit", "ray")]
+script = ExtResource("1_exji8")
+barrel_exit = NodePath("Marker3D")
+ray = NodePath("Marker3D/RayCast3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
+mesh = SubResource("BoxMesh_bw8ve")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+
+[node name="RayCast3D" type="RayCast3D" parent="Marker3D"]
+target_position = Vector3(0, 0, -1000)
+collision_mask = 3
+debug_shape_custom_color = Color(1, 0, 0, 1)
+debug_shape_thickness = 1
